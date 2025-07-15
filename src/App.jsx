@@ -1,12 +1,16 @@
-
+import { FaTwitter } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import confetti from "canvas-confetti";
 import "./App.css";
 
 const agentPool = [
-  { name: "WitByte", image: "/agent1.png" },
-  { name: "Goldmind", image: "/agent2.png" },
-  { name: "Stealtha", image: "/agent3.png" },
-  { name: "ByteBlaze", image: "/agent4.png" }
+  { name: "@andrewxhill", image: "/agent1.png" },
+  { name: "#carsonfarmer", image: "/agent2.png" },
+  { name: "@dataliquidity", image: "/agent3.png" },
+  { name: "@dazuck", image: "/agent4.png" },
+  { name: "@hey_kso", image: "/agent5.png" },
+  { name: "@MsEggmily", image: "/agent6.png" },
+  { name: "@TheDerrek", image: "/agent7.png" }
 ];
 
 function shuffleAgents() {
@@ -24,51 +28,130 @@ export default function App() {
   const [matched, setMatched] = useState([]);
   const [hasWon, setHasWon] = useState(false);
 
+  const clickSound = new Audio("/click.mp3");
+  const matchSound = new Audio("/match.mp3");
+  const failSound = new Audio("/fail.mp3");
+  const winSound = new Audio("/win.mp3");
+
   useEffect(() => {
     setAgents(shuffleAgents());
   }, []);
 
   useEffect(() => {
-    if (matched.length === 8) {
+    if (matched.length === agentPool.length * 2) {
       setHasWon(true);
+      winSound.play();
+      confetti({
+        particleCount: 150,
+        spread: 90,
+        origin: { y: 0.6 }
+      });
     }
   }, [matched]);
 
   const handleFlip = (index) => {
     if (flipped.length === 2 || flipped.includes(index) || matched.includes(index)) return;
+
+    clickSound.play();
     const newFlipped = [...flipped, index];
     setFlipped(newFlipped);
 
     if (newFlipped.length === 2) {
       const [first, second] = newFlipped;
       if (agents[first].name === agents[second].name) {
-        setMatched((prev) => [...prev, first, second]);
+        setTimeout(() => {
+          matchSound.play();
+          setMatched((prev) => [...prev, first, second]);
+        }, 400);
+      } else {
+        setTimeout(() => {
+          failSound.play();
+        }, 300);
       }
       setTimeout(() => setFlipped([]), 800);
     }
   };
 
+  const handlePlayAgain = () => {
+    setAgents(shuffleAgents());
+    setFlipped([]);
+    setMatched([]);
+    setHasWon(false);
+  };
+
+  const shareText = encodeURIComponent("🎉 I just beat the @recallnet Team Flip memory game! Play it here:");
+  const shareURL = encodeURIComponent("https://yourgameurl.com"); // Change this to real game link
+  const tweetLink = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareURL}`;
+
   return (
     <div className="game">
-      <h1 className="title">Vooi Agent Flip</h1>
-      {hasWon && <h2 className="win-message">🎉 All Agents Matched!</h2>}
-      <div className="grid">
-        {agents.map((agent, index) => {
-          const isFlipped = flipped.includes(index) || matched.includes(index);
-          return (
-            <div
-              key={index}
-              className={`card ${isFlipped ? "flipped" : ""}`}
-              onClick={() => handleFlip(index)}
-            >
-              <div className="front"></div>
-              <div className="back">
-                <img src={agent.image} alt={agent.name} />
+      <div className="title">
+  <img src="/recall-logo.png" alt="RecallNet Logo" className="title-logo" />
+  <span>Recallnet Team Flip</span>
+</div>
+
+      <h2 className="subtitle">How well can you recall the @recallnet team? Let's play...</h2>
+
+      {hasWon && (
+        <>
+          <div className="fireworks">🎉✨🎇🎆🥳🧠🎉</div>
+          <div className="buttons">
+            <a href={tweetLink} target="_blank" rel="noopener noreferrer">
+              <button className="share-button">Share on Twitter</button>
+            </a>
+            <button className="play-again" onClick={handlePlayAgain}>Play Again</button>
+          </div>
+        </>
+      )}
+
+      {agents.length === 0 ? (
+        <p>Loading agents...</p>
+      ) : (
+        <div className="grid">
+          {agents.map((agent, index) => {
+            const isFlipped = flipped.includes(index) || matched.includes(index);
+            return (
+              <div
+                key={index}
+                className={`card ${isFlipped ? "flipped" : ""}`}
+                onClick={() => handleFlip(index)}
+              >
+                <div className="inner">
+                  <div className="front">
+                    <img src="/recall-logo.png" alt="Recall Logo" className="logo" />
+                  </div>
+                  <div className="back">
+                    <img src={agent.image} alt={agent.name} />
+                    <div className="agent-name">{agent.name}</div>
+                  </div>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
+
+      <p className="footer">
+        Made with <span className="heart">❤️</span> by{" "}
+        <a
+          href="https://twitter.com/everdonnew"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="highlight"
+        >
+          everdonnew <FaTwitter className="twitter-icon" />
+        </a>{" "}
+        for{" "}
+        <a
+          href="https://twitter.com/recallnet"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="highlight"
+        >
+          recallnet <FaTwitter className="twitter-icon" />
+        </a>
+      </p>
     </div>
   );
 }
+
