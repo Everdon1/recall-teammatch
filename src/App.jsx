@@ -80,7 +80,7 @@ export default function App() {
   };
 
   const shareText = encodeURIComponent("🎉 I just beat the @recallnet Team Flip memory game! Play it here:");
-  const shareURL = encodeURIComponent("https://yourgameurl.com"); // Change this to real game link
+  const shareURL = encodeURIComponent("https://recall-teammatch.vercel.app/"); // Change this to real game link
   const tweetLink = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareURL}`;
 
   return (
