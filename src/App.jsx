@@ -1,8 +1,5 @@
 import { FaTwitter, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa";
 import { useEffect, useState } from "react";
-const [isMuted, setIsMuted] = useState(false);
-import confetti from "canvas-confetti";
 import "./App.css";
 
 const agentPool = [
@@ -29,32 +26,32 @@ export default function App() {
   const [flipped, setFlipped] = useState([]);
   const [matched, setMatched] = useState([]);
   const [hasWon, setHasWon] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
 
   const clickSound = new Audio("/click.mp3");
   const matchSound = new Audio("/match.mp3");
   const failSound = new Audio("/fail.mp3");
   const winSound = new Audio("/win.mp3");
 
-  if (!isMuted) clickSound.play();
-if (!isMuted) matchSound.play();
-if (!isMuted) failSound.play();
-if (!isMuted) winSound.play();
-
   useEffect(() => {
     setAgents(shuffleAgents());
   }, []);
 
   useEffect(() => {
-    if (matched.length === agentPool.length * 2) {
+    if (matched.length === 14) {
       setHasWon(true);
       if (!isMuted) winSound.play();
-      confetti({
-        particleCount: 150,
-        spread: 90,
-        origin: { y: 0.6 }
+
+      import("canvas-confetti").then((module) => {
+        const confetti = module.default;
+        confetti({
+          particleCount: 150,
+          spread: 90,
+          origin: { y: 0.6 }
+        });
       });
     }
-  }, [matched]);
+  }, [matched, isMuted]);
 
   const handleFlip = (index) => {
     if (flipped.length === 2 || flipped.includes(index) || matched.includes(index)) return;
@@ -87,23 +84,24 @@ if (!isMuted) winSound.play();
   };
 
   const shareText = encodeURIComponent("🎉 I just beat the @recallnet Team Flip memory game! Play it here:");
-  const shareURL = encodeURIComponent("https://recall-teammatch.vercel.app/"); // Change this to real game link
+  const shareURL = encodeURIComponent("https://recall-teammatch.vercel.app");
   const tweetLink = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareURL}`;
 
   return (
     <div className="game">
-      <div className="title">
-  <img src="/recall-logo.png" alt="RecallNet Logo" className="title-logo" />
-  <span>Recallnet Team Flip</span>
-        <div className="controls">
-  <button
-    className="mute-button"
-    onClick={() => setIsMuted(!isMuted)}
-    aria-label="Toggle Sound"
-  >
-    {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
-  </button>
-</div>
+      <div className="title-bar">
+        <div className="title">
+          <img src="/recall-logo.png" alt="RecallNet Logo" className="title-logo" />
+          <span>Recallnet Team Flip</span>
+        </div>
+        <button
+          className="mute-button"
+          onClick={() => setIsMuted(!isMuted)}
+          aria-label="Toggle Sound"
+        >
+          {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
+        </button>
+      </div>
 
       <h2 className="subtitle">How well can you recall the @recallnet team? Let's play...</h2>
 
