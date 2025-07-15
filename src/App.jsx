@@ -1,5 +1,7 @@
+import { FaTwitter, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { useEffect, useState } from "react";
+const [isMuted, setIsMuted] = useState(false);
 import confetti from "canvas-confetti";
 import "./App.css";
 
@@ -40,7 +42,7 @@ export default function App() {
   useEffect(() => {
     if (matched.length === agentPool.length * 2) {
       setHasWon(true);
-      winSound.play();
+      if (!isMuted) winSound.play();
       confetti({
         particleCount: 150,
         spread: 90,
@@ -52,7 +54,7 @@ export default function App() {
   const handleFlip = (index) => {
     if (flipped.length === 2 || flipped.includes(index) || matched.includes(index)) return;
 
-    clickSound.play();
+    if (!isMuted) clickSound.play();
     const newFlipped = [...flipped, index];
     setFlipped(newFlipped);
 
@@ -60,12 +62,12 @@ export default function App() {
       const [first, second] = newFlipped;
       if (agents[first].name === agents[second].name) {
         setTimeout(() => {
-          matchSound.play();
+          if (!isMuted) matchSound.play();
           setMatched((prev) => [...prev, first, second]);
         }, 400);
       } else {
         setTimeout(() => {
-          failSound.play();
+          if (!isMuted) failSound.play();
         }, 300);
       }
       setTimeout(() => setFlipped([]), 800);
@@ -88,6 +90,14 @@ export default function App() {
       <div className="title">
   <img src="/recall-logo.png" alt="RecallNet Logo" className="title-logo" />
   <span>Recallnet Team Flip</span>
+        <div className="controls">
+  <button
+    className="mute-button"
+    onClick={() => setIsMuted(!isMuted)}
+    aria-label="Toggle Sound"
+  >
+    {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
+  </button>
 </div>
 
       <h2 className="subtitle">How well can you recall the @recallnet team? Let's play...</h2>
