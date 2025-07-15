@@ -35,6 +35,11 @@ export default function App() {
   const failSound = new Audio("/fail.mp3");
   const winSound = new Audio("/win.mp3");
 
+  if (!isMuted) clickSound.play();
+if (!isMuted) matchSound.play();
+if (!isMuted) failSound.play();
+if (!isMuted) winSound.play();
+
   useEffect(() => {
     setAgents(shuffleAgents());
   }, []);
