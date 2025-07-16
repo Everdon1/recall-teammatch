@@ -54,8 +54,8 @@ export default function App() {
 
   const handleFlip = (index) => {
     if (flipped.length === 2 || flipped.includes(index) || matched.includes(index)) return;
-    if (!isMuted) clickSound.play();
 
+    if (!isMuted) clickSound.play();
     const newFlipped = [...flipped, index];
     setFlipped(newFlipped);
 
