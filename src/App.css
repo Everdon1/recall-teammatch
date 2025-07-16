@@ -38,7 +38,7 @@ body {
 
 .subtitle {
   font-size: 1.1rem;
-  color: #dcdcdc;
+  color: black;
   margin-bottom: 20px;
 }
 
@@ -69,7 +69,7 @@ body {
   cursor: pointer;
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
-  overflow: hidden;
+  overflow: absolute;
   transition: transform 0.3s ease;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
