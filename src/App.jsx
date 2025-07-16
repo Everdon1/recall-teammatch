@@ -93,6 +93,8 @@ export default function App() {
 
   return (
     <div className="game">
+      <div className="background-blur"></div>
+<div className="background-overlay"></div>
       {/* Mute Button */}
       <button className="mute-button" onClick={toggleMute} title={isMuted ? "Unmute" : "Mute"}>
         {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
