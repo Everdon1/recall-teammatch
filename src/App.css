@@ -1,47 +1,42 @@
 :root {
-  --bg-light: #f9f9f9;
-  --bg-dark: #121212;
-  --text-light: #121212;
-  --text-dark: #f9f9f9;
-  --card-border: #ffd700;
-  --primary: #ffcc00;
-}
-
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-body.light {
-  background-color: var(--bg-light);
-  color: var(--text-light);
+  --bg-color: #f9f9f9;
+  --text-color: #1a1a1a;
+  --card-bg: white;
+  --border-color: #ccc;
+  --accent-color: #facc15;
+  --button-bg: #1a1a1a;
+  --button-text: white;
 }
 
 body.dark {
-  background-color: var(--bg-dark);
-  color: var(--text-dark);
+  --bg-color: #121212;
+  --text-color: #f0f0f0;
+  --card-bg: #1e1e1e;
+  --border-color: #444;
+  --button-bg: #f0f0f0;
+  --button-text: #121212;
 }
 
+body,
+html,
 .game {
-  text-align: center;
-  padding: 1rem;
-  animation: fadeIn 0.8s ease-in;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .title {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
+  font-size: 2rem;
   font-weight: bold;
+  margin-top: 20px;
+  gap: 10px;
 }
 
 .title-logo {
@@ -50,119 +45,130 @@ body.dark {
 }
 
 .subtitle {
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-  opacity: 0.8;
+  text-align: center;
+  margin: 12px 0 20px;
+  font-size: 1.1rem;
+  color: var(--text-color);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 12px;
-  max-width: 600px;
-  margin: 1rem auto;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 20px;
+  max-width: 100%;
+  margin: auto;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(5, 1fr);
+    max-width: 900px;
+  }
 }
 
 .card {
+  width: 100%;
+  aspect-ratio: 1 / 1.2;
   perspective: 1000px;
-  cursor: pointer;
-  border: 2px solid var(--card-border);
   border-radius: 8px;
   overflow: hidden;
-  background: white;
-  transition: transform 0.4s;
-  height: 120px;
-  position: relative;
+  border: 2px solid var(--border-color);
+  background: var(--card-bg);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
 }
 
-.card .inner {
+.inner {
+  position: relative;
   width: 100%;
   height: 100%;
-  position: relative;
+  transition: transform 0.6s;
   transform-style: preserve-3d;
-  transition: transform 0.5s;
 }
 
 .card.flipped .inner {
   transform: rotateY(180deg);
 }
 
-.front, .back {
+.front,
+.back {
   position: absolute;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
 }
 
-.front {
-  background: black;
+.front img,
+.back img {
+  max-width: 80%;
+  max-height: 60%;
+  object-fit: contain;
 }
 
 .back {
   transform: rotateY(180deg);
-  background: #fff8dc;
-}
-
-.logo {
-  width: 50px;
-  height: 50px;
+  padding: 5px;
+  background-color: var(--card-bg);
+  text-align: center;
 }
 
 .agent-name {
-  margin-top: 5px;
-  font-size: 0.9rem;
-  font-weight: bold;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 6px;
+  color: var(--text-color);
+}
+
+.fireworks {
+  text-align: center;
+  font-size: 2rem;
+  margin-top: 10px;
 }
 
 .buttons {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
   gap: 10px;
-  margin: 1rem 0 2rem;
 }
 
-button {
+.play-again,
+.share-button {
   padding: 10px 16px;
+  font-size: 1rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-weight: bold;
-  transition: background 0.3s;
+  transition: background 0.2s ease;
 }
 
-.share-button {
-  background: #1da1f2;
-  color: white;
-}
-
-.play-again {
-  background: #222;
-  color: white;
-}
-
-.toggle-bar {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.toggle-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.3rem;
-  color: inherit;
+.play-again:hover,
+.share-button:hover {
+  background-color: var(--accent-color);
+  color: black;
 }
 
 .footer {
-  margin-top: 3rem;
-  font-size: 0.9rem;
-  opacity: 0.7;
+  margin-top: 32px;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-color);
 }
 
 .heart {
@@ -170,26 +176,37 @@ button {
 }
 
 .highlight {
-  font-weight: bold;
-  color: var(--primary);
+  color: var(--accent-color);
+  font-weight: 600;
   text-decoration: none;
 }
 
-@media screen and (max-width: 500px) {
-  .grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
+.twitter-icon {
+  vertical-align: middle;
+  margin-left: 4px;
+}
 
-  .card {
-    height: 100px;
-  }
+/* Mute Button */
 
-  .title {
-    font-size: 1.4rem;
-  }
+.mute-button {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: var(--text-color);
+  z-index: 10;
+}
 
-  .logo {
-    width: 40px;
-    height: 40px;
+.mute-button:hover {
+  color: var(--accent-color);
+}
+
+/* Ensure everything fits on small screens */
+@media (max-height: 720px) {
+  .footer {
+    margin-bottom: 60px;
   }
 }
