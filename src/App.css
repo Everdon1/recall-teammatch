@@ -1,62 +1,94 @@
-/* Global Styles */
-body {
+/* General resets */
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: 'Arial', sans-serif;
-  transition: background-color 0.3s, color 0.3s;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  padding: 0;
 }
 
-body.light {
-  background-image: url("/your-light-bg.jpg");
-  background-color: #f9f6f1;
-  color: #222;
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: var(--bg-color);
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  color: var(--text-color);
+  transition: background-color 0.3s ease, background-image 0.3s ease;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Theme Variables */
+:root {
+  --gold: #c59e49;
+  --black: #000000;
+  --white: #ffffff;
+  --bg-color: #fefefe;
+  --text-color: #000;
+  --bg-image: url("/bg-light.jpg");
 }
 
 body.dark {
-  background-image: url("/your-dark-bg.jpg");
-  background-color: #111;
-  color: #f0f0f0;
+  --bg-color: #0d0d0d;
+  --text-color: #fefefe;
+  --bg-image: url("/bg-dark.jpg");
 }
 
-/* Game container */
 .game {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1.5rem;
-  text-align: center;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Mute and Dark Mode Toggle */
+.mute-button,
+.theme-toggle {
+  position: absolute;
+  top: 1rem;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.mute-button {
+  left: 1rem;
+}
+
+.theme-toggle {
+  right: 1rem;
 }
 
 /* Title */
 .title {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: bold;
+  color: var(--gold);
+  gap: 0.6rem;
   margin-bottom: 0.5rem;
 }
 
 .title-logo {
-  width: 40px;
   height: 40px;
 }
 
 /* Subtitle */
 .subtitle {
   font-size: 1.1rem;
-  margin-bottom: 1.5rem;
-  opacity: 0.8;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: var(--text-color);
 }
 
-/* Grid for cards */
+/* Grid */
 .grid {
   display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  justify-content: center;
 }
 
 @media (min-width: 768px) {
@@ -65,22 +97,19 @@ body.dark {
   }
 }
 
-/* Card styling */
+/* Card */
 .card {
-  background-color: transparent;
-  border: 2px solid #dcb86c;
-  border-radius: 8px;
-  cursor: pointer;
   perspective: 1000px;
-  height: 140px;
-  position: relative;
+  cursor: pointer;
+  width: 100%;
+  aspect-ratio: 1 / 1.2;
 }
 
 .inner {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.5s;
+  transition: transform 0.6s;
   transform-style: preserve-3d;
 }
 
@@ -88,104 +117,89 @@ body.dark {
   transform: rotateY(180deg);
 }
 
-.front, .back {
+.front,
+.back {
   position: absolute;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
+  border: 2px solid var(--gold);
   border-radius: 8px;
   overflow: hidden;
-}
-
-.front {
-  background-color: #000;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: var(--white);
 }
 
 .back {
   transform: rotateY(180deg);
-  background-color: #222;
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  background-color: var(--gold);
 }
 
 .logo {
-  width: 40px;
-  height: 40px;
+  width: 60%;
+}
+
+.back img {
+  width: 60%;
+  margin-top: 0.5rem;
 }
 
 .agent-name {
-  margin-top: 4px;
-  font-size: 0.9rem;
-  color: #f0e1b0;
+  font-size: 0.8rem;
+  color: #000;
+  margin-top: 0.3rem;
+  text-align: center;
 }
 
-/* Footer */
-.footer {
-  margin-top: 2rem;
-  font-size: 0.9rem;
-}
-
-.footer .highlight {
-  font-weight: bold;
-  color: #dcb86c;
-  text-decoration: none;
-}
-
-.heart {
-  color: red;
-}
-
-.twitter-icon {
-  vertical-align: middle;
-}
-
-/* Win Buttons */
+/* Buttons */
 .buttons {
-  margin: 1.5rem auto;
   display: flex;
   flex-direction: column;
-  gap: 12px;
   align-items: center;
+  margin: 1rem 0;
+  gap: 0.5rem;
 }
 
 .play-again,
 .share-button {
-  background-color: #dcb86c;
-  color: #000;
-  padding: 0.6rem 1.2rem;
+  background-color: var(--black);
+  color: var(--white);
   border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
   border-radius: 6px;
-  font-weight: bold;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: background 0.3s ease;
 }
 
 .play-again:hover,
 .share-button:hover {
-  transform: scale(1.05);
+  background-color: var(--gold);
+  color: var(--black);
 }
 
-/* Mute Toggle */
-.mute-toggle {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 1.8rem;
-  cursor: pointer;
-  color: #dcb86c;
+/* Footer */
+.footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-color);
 }
 
-/* Dark Mode Toggle */
-.theme-toggle {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  font-size: 1.8rem;
-  cursor: pointer;
-  color: #dcb86c;
+.highlight {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.twitter-icon {
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+.heart {
+  color: red;
 }
