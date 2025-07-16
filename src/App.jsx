@@ -87,7 +87,7 @@ export default function App() {
     setIsMuted(!isMuted);
   };
 
-  const shareText = encodeURIComponent("🎉 I just beat the @recallnet Team Flip memory game! You too can play it here:");
+  const shareText = encodeURIComponent("🎉 I just WON the @recallnet Team Flip memory game! You can play it here and show us how well you can recall the @recallnet team:");
   const shareURL = encodeURIComponent("https://recall-teammatch.vercel.app");
   const tweetLink = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareURL}`;
 
