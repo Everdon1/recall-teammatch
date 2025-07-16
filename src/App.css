@@ -1,78 +1,82 @@
 body {
   margin: 0;
-  font-family: "Segoe UI", sans-serif;
-  background: url("/recall-background.jpg") no-repeat center center fixed;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url('/recall-background.jpg');
   background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .game {
-  padding: 20px;
   max-width: 1000px;
-  margin: 0 auto;
+  margin: auto;
+  padding: 20px;
   text-align: center;
-  backdrop-filter: blur(4px);
+  position: relative;
 }
 
 .title {
-  font-size: 2.5rem;
-  font-weight: bold;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .title-logo {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
 }
 
 .subtitle {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  color: #dcdcdc;
   margin-bottom: 20px;
-}
-
-.mute-button {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
 }
 
 .grid {
   display: grid;
   gap: 12px;
   justify-content: center;
-  margin: 20px auto;
-  grid-template-columns: repeat(4, 1fr);
+  margin-bottom: 30px;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+}
+
+@media (min-width: 769px) {
   .grid {
     grid-template-columns: repeat(5, 1fr);
   }
 }
 
 .card {
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 2px solid #fff;
-  border-radius: 12px;
+  width: 100%;
+  aspect-ratio: 3/4;
   perspective: 1000px;
-  width: 80px;
-  height: 110px;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .card:hover {
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-  transform: scale(1.05);
+  transform: scale(1.03);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
 }
 
 .inner {
@@ -80,7 +84,7 @@ body {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.5s;
+  transition: transform 0.6s;
 }
 
 .card.flipped .inner {
@@ -93,63 +97,90 @@ body {
   height: 100%;
   backface-visibility: hidden;
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .front {
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.front img.logo {
-  width: 60%;
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .back {
-  background: #1e1e1e;
+  background: rgba(255, 255, 255, 0.05);
   transform: rotateY(180deg);
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  padding: 5px;
+}
+
+.logo {
+  width: 40%;
 }
 
 .back img {
-  width: 70%;
-  border-radius: 6px;
+  width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+  margin-bottom: 6px;
 }
 
 .agent-name {
-  font-size: 0.8rem;
-  margin-top: 6px;
+  font-size: 0.75rem;
+  color: #fff;
+  font-weight: 500;
+  word-wrap: break-word;
+  text-align: center;
+}
+
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 10px 18px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #fff;
+  color: #000;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #eee;
+}
+
+.share-button {
+  background: #1DA1F2;
+  color: white;
+}
+
+.share-button:hover {
+  background: #0d8ddb;
+}
+
+.play-again {
+  background: #f9f9f9;
+  color: #000;
 }
 
 .fireworks {
   font-size: 2rem;
-  margin-bottom: 20px;
-}
-
-.buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.share-button, .play-again {
-  background-color: #ff9800;
-  color: black;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 16px;
-  font-weight: bold;
-  cursor: pointer;
+  margin: 10px 0;
 }
 
 .footer {
-  font-size: 0.9rem;
-  margin-top: 30px;
+  font-size: 0.85rem;
+  text-align: center;
+  color: white;
+  padding-bottom: 30px;
+  margin-top: 40px;
 }
 
 .footer .heart {
@@ -157,11 +188,32 @@ body {
 }
 
 .footer .highlight {
-  color: #1da1f2;
+  color: #1DA1F2;
+  font-weight: bold;
   text-decoration: none;
 }
 
 .twitter-icon {
-  margin-left: 4px;
+  margin-left: 5px;
   vertical-align: middle;
+}
+
+/* Mute button */
+.mute-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  z-index: 100;
+  font-size: 1.2rem;
+  transition: background 0.3s ease;
+}
+
+.mute-button:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
