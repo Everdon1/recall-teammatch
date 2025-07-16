@@ -87,16 +87,18 @@ export default function App() {
     setIsMuted(!isMuted);
   };
 
-  const shareText = encodeURIComponent("🎉 I just beat the @recallnet Team Flip memory game! Play it here:");
+  const shareText = encodeURIComponent("🎉 I just beat the @recallnet Team Flip memory game! You too can play it here:");
   const shareURL = encodeURIComponent("https://recall-teammatch.vercel.app");
   const tweetLink = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareURL}`;
 
   return (
     <div className="game">
+      {/* Mute Button */}
       <button className="mute-button" onClick={toggleMute} title={isMuted ? "Unmute" : "Mute"}>
         {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
       </button>
 
+      {/* Title */}
       <div className="title">
         <img src="/recall-logo.png" alt="RecallNet Logo" className="title-logo" />
         <span>Recallnet Team Flip</span>
@@ -130,7 +132,7 @@ export default function App() {
               >
                 <div className="inner">
                   <div className="front">
-                    <img src="/recall-logo.png" alt="Recall Logo" className="logo" />
+                    <img src="/recall-logo.png" alt="Recall Logo" className="recall-logo" />
                   </div>
                   <div className="back">
                     <img src={agent.image} alt={agent.name} />
@@ -145,11 +147,21 @@ export default function App() {
 
       <p className="footer">
         Made with <span className="heart">❤️</span> by{" "}
-        <a href="https://twitter.com/everdonnew" target="_blank" rel="noopener noreferrer" className="highlight">
+        <a
+          href="https://twitter.com/everdonnew"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="highlight"
+        >
           everdonnew <FaTwitter className="twitter-icon" />
         </a>{" "}
         for{" "}
-        <a href="https://twitter.com/recallnet" target="_blank" rel="noopener noreferrer" className="highlight">
+        <a
+          href="https://twitter.com/recallnet"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="highlight"
+        >
           recallnet <FaTwitter className="twitter-icon" />
         </a>
       </p>
