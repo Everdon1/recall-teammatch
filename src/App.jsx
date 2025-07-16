@@ -54,7 +54,6 @@ export default function App() {
 
   const handleFlip = (index) => {
     if (flipped.length === 2 || flipped.includes(index) || matched.includes(index)) return;
-
     if (!isMuted) clickSound.play();
 
     const newFlipped = [...flipped, index];
@@ -93,12 +92,10 @@ export default function App() {
 
   return (
     <div className="game">
-      {/* Mute Button */}
       <button className="mute-button" onClick={toggleMute} title={isMuted ? "Unmute" : "Mute"}>
         {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
       </button>
 
-      {/* Title */}
       <div className="title">
         <img src="/recall-logo.png" alt="RecallNet Logo" className="title-logo" />
         <span>Recallnet Team Flip</span>
@@ -106,7 +103,6 @@ export default function App() {
 
       <h2 className="subtitle">How well can you recall the @recallnet team? Let's play...</h2>
 
-      {/* Win state */}
       {hasWon && (
         <>
           <div className="fireworks">🎉✨🎇🎆🥳🧠🎉</div>
@@ -119,7 +115,6 @@ export default function App() {
         </>
       )}
 
-      {/* Game grid */}
       {agents.length === 0 ? (
         <p>Loading agents...</p>
       ) : (
@@ -147,7 +142,6 @@ export default function App() {
         </div>
       )}
 
-      {/* Footer */}
       <p className="footer">
         Made with <span className="heart">❤️</span> by{" "}
         <a
@@ -170,5 +164,5 @@ export default function App() {
       </p>
     </div>
   );
-    }
+}
 
