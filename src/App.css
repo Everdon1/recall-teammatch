@@ -5,7 +5,7 @@ body {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  color: white;
+  color: black;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -21,7 +21,7 @@ body {
 .title {
   font-size: 1.8rem;
   font-weight: 600;
-  color: white;
+  color: black;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,14 +49,14 @@ body {
   margin-bottom: 30px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .grid {
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
   }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 600px) {
   .grid {
     grid-template-columns: repeat(5, 1fr);
   }
