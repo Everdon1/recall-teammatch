@@ -4,7 +4,7 @@ import "./App.css";
 
 const agentPool = [
   { name: "@andrewxhill", image: "/agent1.png" },
-  { name: "#carsonfarmer", image: "/agent2.png" },
+  { name: "@carsonfarmer", image: "/agent2.png" },
   { name: "@dataliquidity", image: "/agent3.png" },
   { name: "@dazuck", image: "/agent4.png" },
   { name: "@hey_kso", image: "/agent5.png" },
@@ -43,13 +43,18 @@ export default function App() {
       if (!isMuted) winSound.play();
       import("canvas-confetti").then((module) => {
         const confetti = module.default;
-        confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
+        confetti({
+          particleCount: 150,
+          spread: 90,
+          origin: { y: 0.6 }
+        });
       });
     }
   }, [matched, isMuted]);
 
   const handleFlip = (index) => {
     if (flipped.length === 2 || flipped.includes(index) || matched.includes(index)) return;
+
     if (!isMuted) clickSound.play();
 
     const newFlipped = [...flipped, index];
@@ -88,7 +93,7 @@ export default function App() {
 
   return (
     <div className="game">
-      <button className="mute-button" onClick={toggleMute}>
+      <button className="mute-button" onClick={toggleMute} title={isMuted ? "Unmute" : "Mute"}>
         {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
       </button>
 
@@ -111,46 +116,40 @@ export default function App() {
         </>
       )}
 
-      <div className="grid">
-        {agents.map((agent, index) => {
-          const isFlipped = flipped.includes(index) || matched.includes(index);
-          return (
-            <div
-              key={index}
-              className={`card ${isFlipped ? "flipped" : ""}`}
-              onClick={() => handleFlip(index)}
-            >
-              <div className="inner">
-                <div className="front">
-                  <img src="/recall-logo.png" alt="Recall Logo" className="logo" />
-                </div>
-                <div className="back">
-                  <img src={agent.image} alt={agent.name} />
-                  <div className="agent-name">{agent.name}</div>
+      {agents.length === 0 ? (
+        <p>Loading agents...</p>
+      ) : (
+        <div className="grid">
+          {agents.map((agent, index) => {
+            const isFlipped = flipped.includes(index) || matched.includes(index);
+            return (
+              <div
+                key={index}
+                className={`card ${isFlipped ? "flipped" : ""}`}
+                onClick={() => handleFlip(index)}
+              >
+                <div className="inner">
+                  <div className="front">
+                    <img src="/recall-logo.png" alt="Recall Logo" className="logo" />
+                  </div>
+                  <div className="back">
+                    <img src={agent.image} alt={agent.name} />
+                    <div className="agent-name">{agent.name}</div>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
 
       <p className="footer">
         Made with <span className="heart">❤️</span> by{" "}
-        <a
-          href="https://twitter.com/everdonnew"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="highlight"
-        >
+        <a href="https://twitter.com/everdonnew" target="_blank" rel="noopener noreferrer" className="highlight">
           everdonnew <FaTwitter className="twitter-icon" />
         </a>{" "}
         for{" "}
-        <a
-          href="https://twitter.com/recallnet"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="highlight"
-        >
+        <a href="https://twitter.com/recallnet" target="_blank" rel="noopener noreferrer" className="highlight">
           recallnet <FaTwitter className="twitter-icon" />
         </a>
       </p>
